@@ -1,0 +1,62 @@
+help:http://www.cnblogs.com/zjutzz/p/5790180.html
+     http://www.cnblogs.com/oxspirt/p/6289914.html
+     http://www.tuicool.com/articles/IRJnaa
+基于Token的身份验证——JWT
+
+组成：A由JWT头部信息header加密得到
+      B由JWT用到的身份验证信息json数据加密得到
+      C由A和B加密得到，是校验部分
+
+
+
+
+     header格式为：
+
+     {
+         "typ": "JWT",
+         "alg": "HS256"
+     }
+
+
+     alg字段指定了生成C的算法，默认值是HS256
+
+
+     将header用base64加密，得到A
+
+
+
+    $token=array(
+        "user_id" => 123456, #用户id，表明用户
+        "iat" => 1356999524, #token发布时间
+        "exp" => 1556999524, #token过期时间
+    );
+     将claim set加密后得到B，学名payload
+
+
+
+
+     将A.B使用HS256加密（其实是用header中指定的算法），当然加密过程中还需要密钥（自行指定的一个字符串）。
+
+
+
+     好了，现在A.B.C就是生成的token了。
+
+
+
+    实现步骤
+        无状态的，仅仅在登录的时候验证用户信息，后面一直以token作为验证的依据
+
+前端
+http://www.haomou.net/2014/08/13/2014_web_token/
+        if (token) {
+          $.ajaxSetup({
+            headers: {
+              'x-access-token': token
+            }
+          });
+        }
+
+
+接口设计
+
+http://www.cnblogs.com/wuhuacong/p/4614875.html

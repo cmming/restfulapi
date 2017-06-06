@@ -1,0 +1,85 @@
+-- use db_plat_center;
+
+-- 管理员表
+create table t_admin(
+  ad_id		 int(11) not null auto_increment,			 -- 管理员编号
+  ad_uname	 varchar(32) binary not null unique,			 -- 管理员账号
+  ad_img         text,                                                   -- 管理员头像
+  ad_nick	 varchar(32) not null default '',			 -- 管理员昵称
+  ad_pwd	 varchar(32) not null default '',			 -- 管理员密码
+  ad_role	 int(2) not null default '0',				 -- 管理员扮演角色	0x0ff:超级管理者[创建人] 0x01:技术开发者  0x02:数据分析 0x04:客服 0x08:财务管理
+  dtime		 timestamp default current_timestamp,			 -- 管理员添加时间 不可改
+  enable	 int(2) not null default	'0',			 -- 可用状态  0:不可用  1:可用
+  primary key(ad_id)
+)engine=MYISAM;
+
+
+------------------------------------------------------------
+-- 消息相关表
+------------------------------------------------------------
+
+-- 消息发送列表
+create table t_msg_list(
+   id              int(11) not null auto_increment,			 -- 流水号     
+   recvid          varchar(256) not null default '',                     -- 消息接受者【可以是手机号/邮箱，可以是单个或是多个，若是多个用‘|’分割】
+   title           varchar(256) not null default '',                     -- 消息标题【最多256个字符】
+   content         text,                                                 -- 消息内容
+   attach          text,                                                 -- 附件【邮件发送时用到，json形式，可支持多个附件】
+   is_send         int(2) not null default '0',                          -- 是否已发送【0 未发送 1 已发送 2 发送失败】
+   primary key(id)
+)engine=MYISAM;
+
+-- 联系人列表
+create table t_contacts_list(
+    id              int(11) not null auto_increment,			  -- 流水号
+    name            varchar(32) not null default '',                      -- 联系人名称
+    recvid          varchar(256) not null default '',                     -- 联系人方式【可以是手机号/邮箱,可以是单个或是多个，若是多个用‘|’分割】
+    ctime	    timestamp default current_timestamp,		  -- 添加时间 
+    primary key(id),
+    unique index(name)
+)engine=MYISAM;
+
+-- 消息模版列表
+create table t_msg_model_list(
+    id              int(11) not null auto_increment,			  -- 流水号
+    title           varchar(256) not null default '',                     -- 消息模版标题【最多256个字符】【{var}警告消息 {var}提示消息等】
+    content         text,                                                 -- 消息模版内容【可变内容用{var}表示】
+    is_enable       int(11) not null default '0',                         -- 是否可用【0 审核中 1 通过 2 驳回】
+    primary key(id)
+)engine=MYISAM;
+
+------------------------------------------------------------
+-- 数据相关表
+------------------------------------------------------------
+
+-- 数据源列表【此表的增/改/删只能由技术开发人员操作，普通人员可查】
+create table t_data_src_list(
+     id              int(11) not null auto_increment,			  -- 流水号
+     host            varchar(32) not null default '',                     -- 主机名【用于数据库连接 文件配置，基本不可变】
+     dbname          varchar(32) not null default '',                     -- 数据库名【用于选择数据库文件配置,依赖于host】
+     tname           varchar(32) not null default '',                     -- 数据库表名【用于查询】
+     primary key(id)
+)engine=InnoDB;
+
+-- 数据指标模版列表【此表的增/改/删只能由技术开发人员操作，普通人员可查】
+create table t_data_index_list(
+     id              int(11) not null auto_increment,			  -- 流水号
+     sid             int(11) not null default '0',                        -- 数据源ID【t_data_src_list.id】
+     sindex          varchar(64) not null default '',                     -- 查询指标项【sum(money),sum(price),ave(money)等】
+     primary key(id),
+     foreign key(sid) references t_data_src_list(id)
+)engine=InnoDB;
+
+-- 数据条件模版列表【此表的增/改/删只能由技术开发人员操作，普通人员可查】
+create table t_data_condition_list(
+     id              int(11) not null auto_increment,			  -- 流水号
+     sid             int(11) not null default '0',                        -- 数据源ID【t_data_src_list.id】
+     con             varchar(32) not null default '',                     -- 查询条件【time/ktime/dtime/ctime 时间 sp_id/spid 渠道 paytype 支付方式等】
+     note            varchar(32) not null default '',                     -- 描述
+     primary key(id),
+     foreign key(sid) references t_data_src_list(id)
+)engine=InnoDB;
+
+
+
+
