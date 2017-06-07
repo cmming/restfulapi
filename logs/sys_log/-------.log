@@ -1,6 +1,0 @@
-2017-06-06 17:39:04[log_30f8debb980656131f022596b2fb3041_2][Debug][:55]收到数据IP=[192.168.0.88] data={"type":"\u20181\u2019","$dataform":"{\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjEzMDEyOTE5NTQsImlhdCI6MTQ5NjczOTMwMiwibmJmIjoiIiwiZXhwIjoxNDk2NzQ2NTAyfQ.oSMSvdS0Crqo98-fINiDpnqf6PmFhnQLjTRi_EwYmI0\"}","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTkyLjE2OC4wLjg4L2xhcmF2ZWwvbHVtZW4tYXBpLWRlbW8vcHVibGljL2FwaS9hdXRob3JpemF0aW9ucyIsImlhdCI6MTQ5NTc5MTcxMiwiZXhwIjoxNDk1Nzk1MzEyLCJuYmYiOjE0OTU3OTE3MTIsImp0aSI6InNoV3VLVTBHNmtMS0kwNFUiLCJzdWIiOjExfQ.DX9jcynu5szKptJPZ3RbQvpcvtz9j61A89jyeQ8lCrY"}
-2017-06-06 17:39:04[log_30f8debb980656131f022596b2fb3041_3][Debug][Com\Response::show:43]输出数据IP=[192.168.0.88] data={"cp_data":false,"page_sum":1,"cur_page":null}
-2017-06-06 17:39:04[log_30f8debb980656131f022596b2fb3041_4][Debug][Com\Response::show:43]输出数据IP=[192.168.0.88] data=""
-2017-06-06 17:39:04[log_30f8debb980656131f022596b2fb3041_5][Error][:113]错误的动作请求
-2017-06-06 17:39:04[log_30f8debb980656131f022596b2fb3041_6][Warning][:124]OK
-2017-06-06 17:39:04[log_30f8debb980656131f022596b2fb3041_7][Debug][Com\Response::show:43]输出数据IP=[192.168.0.88] data=""

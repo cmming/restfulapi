@@ -1,0 +1,5 @@
+help:  http://phplaber.iteye.com/blog/1836935
+
+       http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+
+实现
