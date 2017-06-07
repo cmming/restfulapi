@@ -49,17 +49,14 @@ try
 		throw Factory::getCoreException('CODE_BAD_SIGN');
 	}
 	$type = Request('type');
-	$dataform =Request('$dataform');
+	$dataform =Request('$dataform',true);
+//	$type = FrameworkRequest('type');
+//	$dataform =FrameworkRequest('$dataform',true);
 	//验证通过了后，设置日志的文件名称
 //	Factory::getCoreLogger($type);
 	Factory::getCoreLogger($type)->writeLog(__METHOD__.":".__LINE__,"收到数据IP=[".getip_str()."] data=".json_encode($_REQUEST),\Com\CoreLogger::LOG_LEVL_DEBUG);
 	switch ($type)
 	{
-		case 'index':
-		{
-			Factory::getController('Index\Index')->test($dataform);
-		}
-			break;
 		case 'getMsg':
 		{
 			Factory::getController('Msg\Msg')->getMsg($dataform);
@@ -68,6 +65,11 @@ try
 		case 'updateMsg':
 		{
 			Factory::getController('Msg\Msg')->updateMsg($dataform);
+		}
+			break;
+		case 'deleteMsg':
+		{
+			Factory::getController('Msg\Msg')->deleteMsg($dataform);
 		}
 			break;
 		case 'getContacts':
@@ -85,6 +87,11 @@ try
 			Factory::getController('Contact\Contact')->checkContactName($dataform);
 		}
 			break;
+		case 'deleteContact':
+		{
+			Factory::getController('Contact\Contact')->deleteContact($dataform);
+		}
+			break;
 		case 'getMsgModels':
 		{
 			Factory::getController('MsgModel\MsgModel')->getMsgModels($dataform);
@@ -93,6 +100,11 @@ try
 		case 'updateMsgModel':
 		{
 			Factory::getController('MsgModel\MsgModel')->updateMsgModel($dataform);
+		}
+			break;
+		case 'deleteMsgModel':
+		{
+			Factory::getController('MsgModel\MsgModel')->deleteMsgModel($dataform);
 		}
 			break;
 		case 'login':
@@ -113,6 +125,7 @@ try
 			break;
 	}
 }
+//异常捕获
 catch ( CoreException $e)
 {
 	$out_data['code'] = $e->getCode();

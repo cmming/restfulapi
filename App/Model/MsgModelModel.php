@@ -50,6 +50,19 @@ class MsgModelModel
 		return $result;
 	}
 
+	//删除消息模版
+	public function deleteMsgModel($delete_id)
+	{
+		//调用数据库
+		$db = Factory::getClassDbApi();
+		$result = false;
+		if ($db->set_db_link('slave1')) {
+			$query_arr = array('tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $delete_id));
+			$result = $db->mysql_delete_query($query_arr, $db->get_link());
+		}
+		return $result;
+	}
+
 }
 
 ?>

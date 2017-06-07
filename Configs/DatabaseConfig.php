@@ -8,15 +8,15 @@ $DatabaseConfig = array(
 	 */
 	'slave' => array(
 		'slave1' => array(
-			'host' => 'localhost',
-			'user' => 'root',
-			'password' => '123456',
-			'dbname' => 'db_plat_center',
-		),
-		'slave2' => array(
 			'host' => 'bjwebdb',
 			'user' => 'sdk_user',
 			'password' => 'outstandingbull',
+			'dbname' => 'db_plat_center',
+		),
+		'slave2' => array(
+			'host' => 'localhost',
+			'user' => 'root',
+			'password' => '123456',
 			'dbname' => 'db_plat_center',
 		),
 	),

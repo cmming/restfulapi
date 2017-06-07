@@ -25,6 +25,7 @@ class CoreException extends Exception
 	private $CODE_DB_EXCUTE_ERROR = '3010';
 	private $CODE_ERROR_PARAM = '3011';
 	private $CODE_NO_POWER = '3012';
+	private $CODE_DATA_NO_EXIST = '3013';
 
 	private $CODE_USER_UNKNOW_ERROR = '3030';
 	private $CODE_USER_NOT_EXIST = '3031';
@@ -127,6 +128,7 @@ class CoreException extends Exception
 		'3010' => '数据库语句执行失败',
 		'3011' => '参数不合法',
 		'3012' => '此权限还未开通',
+		'3013' => '数据不存在',
 
 		'3030' => '用户登陆未知错误',
 		'3031' => '用户不存在',

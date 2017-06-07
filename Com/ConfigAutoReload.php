@@ -25,7 +25,7 @@ class ConfigAutoReload implements \ArrayAccess
 		$this->path = BASEDIR . $path;
 	}
 
-	public function getInstance($base_dir = '')
+	public static function getInstance($base_dir = '')
 	{
 		if (empty(self::$instance)) {
 			self::$instance = new self($base_dir);

@@ -35,7 +35,7 @@ class ContactModel
 				$id = $data_arr['update_id'];
 				//检查这条数据是否存在
 				$check_arr = array('host'=>'slave1', 'tb_name' => 't_contacts_list', 'cond_col' => array('id=' => $id));
-				$is_exist = $this->checkOneExist($check_arr);
+				$is_exist = $db->check_one_exist($check_arr);
 				if ($is_exist) {
 					unset($data_arr['update_id']);
 					unset($data_arr['upd_flag']);
@@ -46,12 +46,12 @@ class ContactModel
 				else{
 					//没有对应的id数据
 					throw Factory::getCoreException('CODE_UNABLE_DATA');
-
 				}
 			} else {
 				unset($data_arr['upd_flag']);
-				$check_arr = array('tb_name' => 't_contacts_list', 'cond_col' => array('name=' => $data_arr['name']));
-				if(!$this->checkOneExist($check_arr)){
+				$check_arr = array('host'=>'slave1','tb_name' => 't_contacts_list', 'cond_col' => array('name=' => $data_arr['name']));
+				$is_exist = $db->check_one_exist($check_arr);
+				if(!$is_exist){
 					$insert_arg = array('tb_name' => 't_contacts_list', 'record_arr' => $data_arr);
 					$result = $db->mysql_insert_query($insert_arg, $db->get_link());
 				}else{
@@ -62,13 +62,18 @@ class ContactModel
 		return $result;
 	}
 
-	public function checkOneExist($check_arr)
+	public function deleteContact($delete_id)
 	{
 		//调用数据库
-		$db = Factory::getClassDbApi('slave1');
-		$dbRes = $db->check_one_exist($check_arr);
-		return $dbRes;
+		$db = Factory::getClassDbApi();
+		$result = false;
+		if ($db->set_db_link('slave1')) {
+			$query_arr = array('tb_name' => 't_contacts_list', 'cond_col' => array('id=' => $delete_id));
+			$result = $db->mysql_delete_query($query_arr, $db->get_link());
+		}
+		return $result;
 	}
+
 }
 
 ?>

@@ -180,6 +180,10 @@ class ClassDbApi extends MysqlDb
 	//根据查询条件检查该项是否存在
 	public function check_one_exist($check_arr = array())
 	{
+		if(!isset($check_arr['host'])){
+			throw Factory::getCoreException('CODE_UNABLE_DATA');
+			Factory::getCoreLogger()->writeLog(__METHOD__.":".__LINE__,"没有配置数据库",\Com\CoreLogger::LOG_LEVL_ERROR);
+		}
 		$result = false;
 		if ($this->set_db_link($check_arr['host']) && $check_arr) {
 			$arg = array('tb_name' => $check_arr['tb_name'], 'cond_col' => $check_arr['cond_col']);
