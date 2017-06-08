@@ -38,11 +38,6 @@ Class Response
 		{
 			echo    $callback.'('.self::jsonEncode($code,$message,$data).')';
 		}
-//		$core_logger =Factory::getCoreLogger(__METHOD__);
-//		$core_logger->writeLog(__METHOD__.":".__LINE__,"输出数据IP=[".getip_str()."] data=".json_encode($data),$core_logger::LOG_LEVL_DEBUG);
-		\Com\CoreLogger::getInstance()->writeLog(__METHOD__.":".__LINE__,"输出数据IP=[".getip_str()."] data=".json_encode($data),\Com\CoreLogger::LOG_LEVL_DEBUG);
-//echo json_encode($out_data);
-
 	}
 
 //json接口

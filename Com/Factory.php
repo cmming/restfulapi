@@ -139,6 +139,16 @@ class Factory
 		}
 		return $mideleware;
 	}
+	//创建路由类
+	static function getRouter($type,$dataform){
+		$key = 'router_'.$type;
+		$router = Register::get($key);
+		if (!$router) {
+			$router = new Router($type,$dataform);
+			Register::set($key, $router);
+		}
+		return $router;
+	}
 }
 
 ?>

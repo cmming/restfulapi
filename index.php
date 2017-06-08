@@ -39,15 +39,6 @@ try
 		//抛出异常，告知用户同时写入日志
 		throw Factory::getCoreException('CODE_BAD_PARAM');
 	}
-	//验证签名
-	//if(!CheckSign($_POST,SIGN_KEY))
-//	if(Factory::getMiddelWare('Jwt\Jwt')->checkToken())
-	if(0)
-	{
-		\Com\CoreLogger::getInstance()->writeLog(__METHOD__ . ":" . __LINE__, Factory::getCoreException('CODE_BAD_SIGN')->getErrorDes('CODE_BAD_SIGN'), \Com\CoreLogger::LOG_LEVL_ERROR);
-		//抛出异常，告知用户同时写入日志
-		throw Factory::getCoreException('CODE_BAD_SIGN');
-	}
 	$type = Request('type');
 	$dataform =Request('$dataform',true);
 //	$type = FrameworkRequest('type');
@@ -55,75 +46,10 @@ try
 	//验证通过了后，设置日志的文件名称
 //	Factory::getCoreLogger($type);
 	Factory::getCoreLogger($type)->writeLog(__METHOD__.":".__LINE__,"收到数据IP=[".getip_str()."] data=".json_encode($_REQUEST),\Com\CoreLogger::LOG_LEVL_DEBUG);
-	switch ($type)
-	{
-		case 'getMsg':
-		{
-			Factory::getController('Msg\Msg')->getMsg($dataform);
-		}
-			break;
-		case 'updateMsg':
-		{
-			Factory::getController('Msg\Msg')->updateMsg($dataform);
-		}
-			break;
-		case 'deleteMsg':
-		{
-			Factory::getController('Msg\Msg')->deleteMsg($dataform);
-		}
-			break;
-		case 'getContacts':
-		{
-			Factory::getController('Contact\Contact')->getContacts($dataform);
-		}
-			break;
-		case 'updateContact':
-		{
-			Factory::getController('Contact\Contact')->updateContact($dataform);
-		}
-			break;
-		case 'checkContactName':
-		{
-			Factory::getController('Contact\Contact')->checkContactName($dataform);
-		}
-			break;
-		case 'deleteContact':
-		{
-			Factory::getController('Contact\Contact')->deleteContact($dataform);
-		}
-			break;
-		case 'getMsgModels':
-		{
-			Factory::getController('MsgModel\MsgModel')->getMsgModels($dataform);
-		}
-			break;
-		case 'updateMsgModel':
-		{
-			Factory::getController('MsgModel\MsgModel')->updateMsgModel($dataform);
-		}
-			break;
-		case 'deleteMsgModel':
-		{
-			Factory::getController('MsgModel\MsgModel')->deleteMsgModel($dataform);
-		}
-			break;
-		case 'login':
-		{
-			Factory::getController('Admin\Admin')->login($dataform);
-		}
-			break;
 
-		default :
-		{
-			Factory::getController('Index\Index')->test($dataform);
-			//错误请求 类型日志
-			App\Controller\ErrorAction\ErrorAction::errorAction();
-			\Com\CoreLogger::getInstance()->writeLog(__METHOD__ . ":" . __LINE__, Factory::getCoreException('CODE_BAD_ACTION')->getErrorDes('CODE_BAD_ACTION'), \Com\CoreLogger::LOG_LEVL_ERROR);
-			//抛出异常，告知用户同时写入日志
-			throw Factory::getCoreException('CODE_BAD_SIGN');
-		}
-			break;
-	}
+	//根据路由的配置文件进行自动跳转
+	Factory::getRouter($type,$dataform);
+
 }
 //异常捕获
 catch ( CoreException $e)

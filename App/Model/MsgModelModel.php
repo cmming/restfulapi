@@ -32,7 +32,7 @@ class MsgModelModel
 			//如果是更新 upd_flag =1
 			if ($upd_flag) {
 				$id = $data_arr['update_id'];
-				$check_arr = array('tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $id));
+				$check_arr = array('host'=>'slave1','tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $id));
 				$is_exist = $db->check_one_exist($check_arr);
 				if ($is_exist) {
 					unset($data_arr['update_id']);

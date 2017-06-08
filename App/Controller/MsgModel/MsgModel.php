@@ -49,9 +49,6 @@ class MsgModel extends BaseController
 	{
 		//数据 要求
 		$validate_role = array(
-			'recvid' => array(
-				'required' => true,
-			),
 			'title' => array(
 				'required' => true,
 			),

@@ -12,6 +12,7 @@ use Com\JWT;
 
 class Auth
 {
+	//解密的秘匙，不会传到前端保证安全
 	private $key = "apikey";
 	private $token = array("iss" => '', "iat" => '', "nbf" => '', "exp" => '',);
 
@@ -55,7 +56,11 @@ class Auth
 		$decoded = JWT::decode($jwt, $this->key, array('HS256'));
 		//$decoded 能正常解析就说明token 有效（失效性里面已经过期了），同时也可以 验证里面的其它信息
 		$data = (array)$decoded;
-		var_dump(!empty((array)$decoded));
+		if(empty((array)$decoded)){
+			\Com\CoreLogger::getInstance()->writeLog(__METHOD__ . ":" . __LINE__, Factory::getCoreException('CODE_BAD_SIGN')->getErrorDes('CODE_BAD_SIGN'), \Com\CoreLogger::LOG_LEVL_ERROR);
+			//抛出异常，告知用户同时写入日志
+			throw Factory::getCoreException('CODE_BAD_SIGN');
+		}
 		return !empty((array)$decoded);
 	}
 }
