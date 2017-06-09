@@ -13,12 +13,13 @@ use Com\Factory;
 
 class ContactModel
 {
-	public function getContacts($con_arr = array(), $cp_arr, $extra_arr = array())
+	public function getContacts($sid,$con_arr = array(), $cp_arr, $extra_arr = array())
 	{
+		//依据传过来的系统选择编号进行查询，得出苏俱来的数据库名称以及表名
 		//调用数据库
-		$db = Factory::getClassDbApi();
+		$db = Factory::getClassDbApi($sid);
 
-		$dbRes = $db->search_sdk_cp_table('slave1', 't_contacts_list', 'id', array(), $con_arr, $cp_arr, $extra_arr);
+		$dbRes = $db->search_sdk_cp_table($sid, 't_contacts_list', 'id', array(), $con_arr, $cp_arr, $extra_arr);
 
 		return $dbRes;
 	}

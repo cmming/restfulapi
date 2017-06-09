@@ -63,7 +63,7 @@ class ClassDbApi extends MysqlDb
 	 */
 	public function set_db_link($con)
 	{
-		$dbConfig = ConfigAutoReload::getInstance('\\Configs\\')['DatabaseConfig']['slave'][$con];
+		$dbConfig = ConfigAutoReload::getInstance('\\Configs\\')['DatabaseConfig'][$con];
 		if (is_array($dbConfig) && $dbConfig) {
 			$res_link = parent::mysql_db_connect($dbConfig['host'], $dbConfig['user'], $dbConfig['password'], $dbConfig['dbname']);
 			is_resource($res_link) && ($this->links[$dbConfig['host']] = $res_link);

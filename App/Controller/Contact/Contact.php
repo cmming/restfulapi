@@ -49,11 +49,16 @@ class Contact extends BaseController
 		$validate_role = array(
 			'cur_page' => array(
 				'number' => true,
-			)
+				'required' => true,
+			),
+			'sid' => array(
+				'required' => true,
+			),
 		);
 		$rt = Factory::getValidate()->verify($formdata, $validate_role);
-
 		if ($rt === true) {
+			//选择系统
+			$sid = $formdata['sid'];
 			//搜索的参数
 			$con_arr = array();
 			//分页的初始化参数
@@ -61,7 +66,7 @@ class Contact extends BaseController
 			//排序的初始化
 			$extra_arr = array('order' => '', 'order_by' => '');
 			//调用数据层
-			$modelRes = Factory::getModel('ContactModel')->getContacts(array(), $cp_arr);
+			$modelRes = Factory::getModel('ContactModel')->getContacts($sid, array(), $cp_arr);
 			//数据解析
 			foreach ($modelRes['cp_data'] as $key => $item) {
 				foreach ($item as $kk => $vv) {

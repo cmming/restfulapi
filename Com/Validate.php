@@ -134,10 +134,10 @@ class Validate
 						if (!in_array($k, $this->role_name)) return 'role name "' . $k . '" is not found!';
 						if ($v == true) {
 							if (!$this->$k($value)) {
-								$resMsg = $validate_err_msg[$kk][$k];
-
 								if (!isset($validate_err_msg[$kk][$k])){
 									$resMsg = $this->err_msg_default[$k];
+								}else{
+									$resMsg = $validate_err_msg[$kk][$k];
 								}
 //									return 'var ' . $key . ' in ' . $k . ' of regular validation failure!';
 								//不满足要求可以输出 warning 日志

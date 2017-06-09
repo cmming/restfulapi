@@ -2,24 +2,27 @@
 
 $DatabaseConfig = array(
 	/**
-	 * 一种功能配置在 多个服务器上
-	 * slave:功能  （写数据。。）
+	 *
 	 * slave1：该功能的一个服务器
 	 */
-	'slave' => array(
-		'slave1' => array(
+		'slave2' => array(
 			'host' => 'bjwebdb',
 			'user' => 'sdk_user',
 			'password' => 'outstandingbull',
 			'dbname' => 'db_plat_center',
 		),
-		'slave2' => array(
-			'host' => 'localhost',
+		'slave1' => array(
+			'host' => '192.168.0.88',
 			'user' => 'root',
 			'password' => '123456',
 			'dbname' => 'db_plat_center',
 		),
-	),
+		'slave3' => array(
+				'host' => '192.168.0.88',
+				'user' => 'root',
+				'password' => '123456',
+				'dbname' => 'db_vr_center',
+		),
 );
 return $DatabaseConfig;
 

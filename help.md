@@ -115,3 +115,19 @@ http://192.168.0.88/laravel/dcenter/api/?type=tokenValidate&$dataform={"token":"
 
 
 ```
+
+
+### 程序流程
+
+```
+
+接受数据
+    
+分析数据
+    做决策
+        
+    
+返回处理结果
+
+
+```

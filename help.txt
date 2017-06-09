@@ -32,45 +32,46 @@ Com:公共库
 Config:配置信息
 
 //测试
-http://192.168.0.88/laravel/dcenter/api/?type=index&$dataform={"cur_page":"1"}
+http://192.168.0.88/laravel/dcenter/api/?type=index&dataform={"cur_page":"1"}
 
 
 //查询消息
-http://192.168.0.88/laravel/dcenter/api/?type=getMsg&$dataform={"cur_page":"6"}
+http://192.168.0.88/laravel/dcenter/api/?type=getMsg&dataform={"cur_page":"6"}
 //添加或修改消息
 //添加
-http://192.168.0.88/laravel/dcenter/api/?type=updateMsg&$dataform={"upd_flag":"0","recvid":"13037125104","title":"msg add title","content":"msg content add","attach":""}
+http://192.168.0.88/laravel/dcenter/api/?type=updateMsg&dataform={"upd_flag":"0","sid":"1","recvid":"13037125104","title":"msg add title","content":"msg content add","attach":""}
 //修改
-http://192.168.0.88/laravel/dcenter/api/?type=updateMsg&$dataform={"upd_flag":"1","update_id":"1","recvid":"13037125104","title":"msg add title","content":"msg content add","attach":"change"}
+http://192.168.0.88/laravel/dcenter/api/?type=updateMsg&dataform={"upd_flag":"1","update_id":"1","recvid":"13037125104","title":"msg add title","content":"msg content add","attach":"change"}
 //删除
-http://192.168.0.88/laravel/dcenter/api/?type=deleteMsg&$dataform={"delete_id":"1"}
+http://192.168.0.88/laravel/dcenter/api/?type=deleteMsg&dataform={"delete_id":"1"}
 
 //查询联系人
-http://192.168.0.88/laravel/dcenter/api/?type=getMsgModels&$dataform={"cur_page":"1"}
+http://192.168.0.88/laravel/dcenter/api/?type=getContacts&dataform={"cur_page":"1","sid":"slave1"}
 //添加联系人
-http://192.168.0.88/laravel/dcenter/api/?type=updateContact&$dataform={"upd_flag":"0","name":"陈明","recvid":"13037125104|13037125104@163.com"}
+http://192.168.0.88/laravel/dcenter/api/?type=updateContact&dataform={"upd_flag":"0","name":"陈明","recvid":"13037125104|13037125104@163.com"}
 //修改联系人
-http://192.168.0.88/laravel/dcenter/api/?type=updateContact&$dataform={"upd_flag":"1","update_id":"3","name":"陈明","recvid":"13037125104|13037125104@163.com|13037125104@163.com"}
+http://192.168.0.88/laravel/dcenter/api/?type=updateContact&dataform={"upd_flag":"1","update_id":"3","name":"陈明","recvid":"13037125104|13037125104@163.com|13037125104@163.com"}
+
 //检查联系人是否唯一 添加的时候最好也请求（失去焦点验证），
-http://192.168.0.88/laravel/dcenter/api/?type=checkContactName&$dataform={"name":"cmedit"}
+http://192.168.0.88/laravel/dcenter/api/?type=checkContactName&dataform={"name":"cmedit"}
 //删除
-http://192.168.0.88/laravel/dcenter/api/?type=deleteContact&$dataform={"delete_id":"1"}
+http://192.168.0.88/laravel/dcenter/api/?type=deleteContact&dataform={"delete_id":"1"}
 
 
-//查询联系人
-http://192.168.0.88/laravel/dcenter/api/?type=getContacts&$dataform={"cur_page":"1"}
+//查询 消息模版
+http://192.168.0.88/laravel/dcenter/api/?type=getMsgModels&dataform={"cur_page":"1"}
 //添加消息 模版
-http://192.168.0.88/laravel/dcenter/api/?type=updateMsgModel&$dataform={"upd_flag":"0","title":"this is a title","content":"this is a content"}
+http://192.168.0.88/laravel/dcenter/api/?type=updateMsgModel&dataform={"upd_flag":"0","title":"this is a title","content":"this is a content"}
 //修改消息 模版
-http://192.168.0.88/laravel/dcenter/api/?type=updateMsgModel&$dataform={"upd_flag":"1","update_id":"1","title":"change title","content":"change content"}
+http://192.168.0.88/laravel/dcenter/api/?type=updateMsgModel&dataform={"upd_flag":"1","update_id":"1","title":"change title","content":"change content"}
 //删除
-http://192.168.0.88/laravel/dcenter/api/?type=deleteMsgModel&$dataform={"delete_id":"1"}
+http://192.168.0.88/laravel/dcenter/api/?type=deleteMsgModel&dataform={"delete_id":"1"}
 
 //登录
 login
 
-http://192.168.0.88/laravel/dcenter/api/?type=login&$dataform={"ad_uname":"cm","ad_pwd":"123456"}
+http://192.168.0.88/laravel/dcenter/api/?type=login&dataform={"ad_uname":"cm","ad_pwd":"123456"}
 
 //token 验证测试
 
-http://192.168.0.88/laravel/dcenter/api/?type=tokenValidate&$dataform={"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjE0OTY3Mzc5OTIsImlhdCI6IiIsIm5iZiI6IiIsImV4cCI6MTQ5Njc0NTE5Mn0.0aAuxCEfOC6zE0JTj_v4_FACPjVOQtrkgZXytWShPs4"}
+http://192.168.0.88/laravel/dcenter/api/?type=tokenValidate&dataform={"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjE0OTY3Mzc5OTIsImlhdCI6IiIsIm5iZiI6IiIsImV4cCI6MTQ5Njc0NTE5Mn0.0aAuxCEfOC6zE0JTj_v4_FACPjVOQtrkgZXytWShPs4"}
