@@ -63,6 +63,11 @@ http://www.cnblogs.com/wuhuacong/p/4614875.html
 
 
 
+路由的设计：职责将路由配置文件，自动跳转，每个子路由的路由分离出去；
+            配置文件的自动加载->ConfigAutoReload
+            自动跳转->factory::getController
+            子路有的特异性->使用装饰器为外部预留接口。便于后面的项目将代码分离出去；
+
 restful
 
 

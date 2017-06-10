@@ -1,0 +1,21 @@
+#RewriteEngine on
+#Options +FollowSymlinks
+#RewriteEngine on
+#
+## 重写规则
+#RewriteRule ^class$   index.php?class=all [nc,qsa]
+#RewriteRule ^class/(\d+)$   index.php?class=$1 [nc,qsa]
+
+
+#ErrorDocument 404 http://192.168.0.88/laravel/dcenter/api/test/simpleRouter/
+
+
+RewriteEngine on
+# If a directory or a file exists, use the request directly
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+# Otherwise forward the request to index.php
+    RewriteRule . index.php
+
+
+

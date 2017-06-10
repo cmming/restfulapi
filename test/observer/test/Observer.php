@@ -7,7 +7,7 @@
  */
 
 namespace test;
-
+//观察者的时间发布 抽象类
 
 interface Observer
 {

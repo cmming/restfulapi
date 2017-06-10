@@ -16,10 +16,12 @@ spl_autoload_register('\\Com\\Loader::autoload');
 $event = new \test\Event();
 
 //添加观察者
-$event->addObserver(new \test\Observer1());
-$event->addObserver(new \test\Observer2());
+$event->addObserver('t1',new \test\Observer1());
+$event->addObserver('t2',new \test\Observer2());
 
-//时间发生者 一旦发生事件 就会激活观察者的时间
+//事件发生者 一旦发生事件 就会激活观察者的时间
+$event->tigger();
+$event->removeObserver('t1');
 $event->tigger();
 
 ?>

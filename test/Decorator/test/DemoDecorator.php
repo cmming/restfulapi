@@ -11,14 +11,18 @@ namespace test;
 
 class DemoDecorator implements demoInterface
 {
+	//相当于闭包中的变量
+	protected static $num = 1;
 	public function at_before()
 	{
 		// TODO: Implement at_before() method.
-		echo 'at_before<br>';
+		self::$num+=1;
+		echo 'at_before'.self::$num.'<br>';
 	}
 	public function  at_end()
 	{
 		// TODO: Implement at_end() method.
-		echo 'at_end<br>';
+		self::$num+=1;
+		echo 'at_end'.self::$num.'<br>';
 	}
 }

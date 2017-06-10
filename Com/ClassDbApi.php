@@ -65,14 +65,17 @@ class ClassDbApi extends MysqlDb
 	{
 		$dbConfig = ConfigAutoReload::getInstance('\\Configs\\')['DatabaseConfig'][$con];
 		if (is_array($dbConfig) && $dbConfig) {
-			$res_link = parent::mysql_db_connect($dbConfig['host'], $dbConfig['user'], $dbConfig['password'], $dbConfig['dbname']);
-			is_resource($res_link) && ($this->links[$dbConfig['host']] = $res_link);
-			if (!is_resource($res_link)) {
-				Factory::getCoreLogger()->writeLog(__METHOD__ . ":" . __LINE__, "连接数据库失败", \Com\CoreLogger::LOG_LEVL_ERROR);
-				//抛出异常，告知用户同时写入日志
-				throw Factory::getCoreException('CODE_DB_CONNECT_ERROR');
+			//数据库实例不存在，或者不是一个数据库连接资源时，重行创建连接
+			if (!isset($this->links[$dbConfig['host']]) || !is_resource($this->links[$dbConfig['host']])) {
+				$res_link = parent::mysql_db_connect($dbConfig['host'], $dbConfig['user'], $dbConfig['password'], $dbConfig['dbname']);
+				is_resource($res_link) && ($this->links[$dbConfig['host']] = $res_link);
+				if (!is_resource($res_link)) {
+					Factory::getCoreLogger()->writeLog(__METHOD__ . ":" . __LINE__, "连接数据库失败", \Com\CoreLogger::LOG_LEVL_ERROR);
+					//抛出异常，告知用户同时写入日志
+					throw Factory::getCoreException('CODE_DB_CONNECT_ERROR');
+				}
 			}
-			//当前链接不为设定链接时赋值  ???
+			//当前连接存在而且，当前数据库实例不等于数据库单例，就将刚连接完成的数据库对象赋值给单例
 			isset($this->links[$dbConfig['host']]) && $this->links['ope'] != $this->links[$dbConfig['host']] && ($this->links['ope'] = $this->links[$dbConfig['host']]);
 		}
 		return is_resource($this->links['ope']) ? true : false;

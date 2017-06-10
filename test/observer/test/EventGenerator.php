@@ -15,8 +15,14 @@ abstract class EventGenerator
 	//保存所有 添加的观察者 （对于事件发生者不可见）
 	private $observers = array();
 	//添加观察者
-	public function addObserver(Observer $observer){
-		$this->observers[] = $observer;
+	public function addObserver($key, Observer $observer){
+		$this->observers[$key] = $observer;
+	}
+	//删除观察者
+	public function removeObserver($key){
+		if(isset($this->observers[$key])){
+			unset($this->observers[$key]);
+		}
 	}
 	//发送通知 添加了观察者的对象发送通知（让其执行相应的函数）
 	public function notify(){
