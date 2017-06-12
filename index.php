@@ -10,7 +10,7 @@ define('BASEDIR',__DIR__);
 
 include BASEDIR.'/Com/Loader.php';
 include BASEDIR.'/Com/func.php';
-
+session_start();
 spl_autoload_register('\\Com\\Loader::autoload');
 
 use Com\CoreException;

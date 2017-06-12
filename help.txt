@@ -36,7 +36,7 @@ http://192.168.0.88/laravel/dcenter/api/?type=index&dataform={"cur_page":"1"}
 
 
 //查询消息
-http://192.168.0.88/laravel/dcenter/api/?type=getMsg&dataform={"cur_page":"6"}
+http://192.168.0.88/laravel/dcenter/api/?type=getMsg&dataform={"cur_page":"1"}
 //添加或修改消息
 //添加
 http://192.168.0.88/laravel/dcenter/api/?type=updateMsg&dataform={"upd_flag":"0","sid":"1","recvid":"13037125104","title":"msg add title","content":"msg content add","attach":""}
@@ -71,6 +71,11 @@ http://192.168.0.88/laravel/dcenter/api/?type=deleteMsgModel&dataform={"delete_i
 login
 
 http://192.168.0.88/laravel/dcenter/api/?type=login&dataform={"ad_uname":"cm","ad_pwd":"123456"}
+//添加
+http://192.168.0.88/laravel/dcenter/api/?type=addAdmin&dataform={"ad_uname":"cm","ad_pwd":"123456","ad_nick":"nicheng"}
+//退出登录
+http://192.168.0.88/laravel/dcenter/api/?type=signUp&dataform={}
+
 
 //token 验证测试
 

@@ -40,8 +40,35 @@ class Admin extends BaseController
 			}
 
 		}
+	}
 
+	public function addAdmin($formdata){
+		$validate_role = array(
+			"ad_uname"=>array("required"=>true),
+			"ad_pwd"=>array("required"=>true),
+			"ad_nick"=>array("required"=>true),
+		);
 
+		$rt = Factory::getValidate($formdata,$validate_role);
+		if($rt){
+			//检测用户名是否存在
+			$check_arr =  array('host'=>'slave1', 'tb_name' => 't_admin', 'cond_col' => array('ad_uname=' => $formdata['ad_uname']));
+			$ad_uname_is_exist = Factory::getModel('AdminModel')->ad_uname_is_exist($check_arr);
+			if(!$ad_uname_is_exist){
+				$modelRes = Factory::getModel('AdminModel')->addAdmin($formdata);
+				$code = parent::getErrorCode('CODE_DEAL_OK');
+				$msg = parent::getErrorCode('CODE_DEAL_OK');
+				return Factory::getResponse()->show($code, $msg, $modelRes);
+			}else{
+				throw Factory::getCoreException('DATA_REPEAT');
+			}
+		}
+	}
+
+	//退出登录
+	public function signUp(){
+		unset($_SESSION['PLAT_CENTER']);
+		session_destroy();
 	}
 
 }
