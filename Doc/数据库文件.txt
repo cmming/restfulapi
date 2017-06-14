@@ -1,4 +1,4 @@
--- use db_plat_center;
+﻿-- use db_plat_center;
 
 -- 管理员表
 create table t_admin(

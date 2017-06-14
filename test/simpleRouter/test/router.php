@@ -45,7 +45,7 @@ class router
 		$this->getResoucePath();
 		echo $method.$resouce_path.$controler_name;
 		$this->after();
-		$callBack();
+		echo $callBack;
 	}
 	//添加 装饰器函数，添加钩子函数
 	public function addHook($key,$obj){

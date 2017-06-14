@@ -39,10 +39,10 @@ try
 		//抛出异常，告知用户同时写入日志
 		throw Factory::getCoreException('CODE_BAD_PARAM');
 	}
-	$type = Request('type');
-	$dataform =Request('dataform',true);
-//	$type = FrameworkRequest('type');
-//	$dataform =FrameworkRequest('dataform',true);
+//	$type = Request('type');
+//	$dataform =Request('dataform',true);
+	$type = FrameworkRequest('type');
+	$dataform =FrameworkRequest('dataform',true);
 	//验证通过了后，设置日志的文件名称
 //	Factory::getCoreLogger($type);
 	Factory::getCoreLogger($type)->writeLog(__METHOD__.":".__LINE__,"收到数据IP=[".getip_str()."] data=".json_encode($_REQUEST),\Com\CoreLogger::LOG_LEVL_DEBUG);

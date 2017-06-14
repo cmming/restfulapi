@@ -131,3 +131,15 @@ http://192.168.0.88/laravel/dcenter/api/?type=tokenValidate&$dataform={"token":"
 
 
 ```
+
+
+### 代码风格
+
+```
+json 作为优美的数据结构；可以将其也作为代码的风格；
+
+前端：vue 就是这种形式；
+
+后端：也可以自己封装一个基本类，然后代码的风格就可以学习vue 的风格；
+
+```
