@@ -15,9 +15,7 @@ class Factory
 	//日志类 对于单例类，没有必要封装，或者将其转换为非单例模式
 	static function getCoreLogger($filename = '')
 	{
-//		var_dump($filename);
 		$filename = preg_replace("/[^A-Za-z]/", "-", $filename);
-//		var_dump($filename);
 		$key = 'com_core_logger' . $filename;
 		$core_logger = Register::get($key);
 		if (!$core_logger) {

@@ -116,6 +116,13 @@ http://192.168.0.88/laravel/dcenter/api/?type=tokenValidate&$dataform={"token":"
 
 ```
 
+### 登录处理
+
+```
+{"id":753,"pid":78,"username":"sls-1","email":"","sex":"3","status":1,"create_time":"2017-05-08 08:16:11","birthday":"1992-11-05","address":"","token":"8b04498138834fa8e4e961c71591b565","access_status":2,"web_routers":{},"api_routers":{},"default_web_routers":"","is_update_pass":1}
+
+```
+
 
 ### 程序流程
 

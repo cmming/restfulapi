@@ -64,6 +64,9 @@ class Admin extends BaseController
 			}
 		}
 	}
+	public function updateToken(){
+		return Factory::getJwt()->createToken();
+	}
 
 	//退出登录
 	public function signUp(){

@@ -1,5 +1,6 @@
 <?php
 
+use Com\Factory;
 /**
  * 普通的接收参数的函数
  * @param $params 参数的类型
@@ -8,11 +9,16 @@
  */
 function Request($params, $is_json_decode = false)
 {
-	$result = isset($_REQUEST[$params]) ? $_REQUEST[$params] : '';
-	if ($is_json_decode) {
-		return json_decode($result, true);
-	} else {
-		return $result;
+	//进行错误处理
+	if(isset($_REQUEST[$params])){
+		$result = $_REQUEST[$params];
+		if ($is_json_decode) {
+			return json_decode($result, true);
+		} else {
+			return $result;
+		}
+	}else{
+		throw Factory::getCoreException('CODE_BAD_PARAM');
 	}
 }
 
@@ -26,11 +32,15 @@ function FrameworkRequest($params, $is_json_decode = false)
 {
 	$request_data = file_get_contents('php://input', true);
 	$request_data = json_decode($request_data, true);
-	$result = isset($request_data[$params]) ? $request_data[$params] : '';
-	if ($is_json_decode) {
-		return json_decode($result, true);
-	} else {
-		return $result;
+	if(isset($request_data[$params])){
+		$result = $request_data[$params];
+		if ($is_json_decode) {
+			return json_decode($result, true);
+		} else {
+			return $result;
+		}
+	}else{
+		throw Factory::getCoreException('CODE_BAD_PARAM');
 	}
 }
 

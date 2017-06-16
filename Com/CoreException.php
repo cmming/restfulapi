@@ -85,7 +85,7 @@ class CoreException extends Exception
 
 
 	private static $_MESSAGE_MAP = array(
-		'100' => 'FAIL',
+		'100' => '参数错误',
 		'200' => 'OK',
 		'403' => '禁止访问',
 

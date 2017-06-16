@@ -6,18 +6,6 @@
  * Time: 14:03
  * Help:http://blog.csdn.net/jia28970475/article/details/52296989
  */
-//$type = isset($_GET['type'])? $_GET['type'] : 'json';
-//
-//$callback = isset($_GET['callback'])? $_GET['callback'] : '';
-//
-//
-//$arr = array(
-//	'id'=>1,
-//	'name'=>'jia',
-//	'type'=>array(1,2,3)
-//);
-//
-//Response::show(200,'数据返回成功',$arr,$type,$callback);
 
 namespace Com;
 

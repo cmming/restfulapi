@@ -40,9 +40,9 @@ class AdminModel
 				$out_data['data']['ad_id'] = $ad_pwd_arr['ad_id'];
 				$out_data['data']['ad_uname'] = $ad_pwd_arr['ad_uname'];
 				$out_data['data']['ad_nick'] = $ad_pwd_arr['ad_nick'];
-				return $out_data['data'];
+//				return $out_data['data'];
 				//创建一个token 并且 返回
-				//return Factory::getJwt()->createToken($data_arr);
+				return Factory::getJwt()->createToken($data_arr);
 			}
 		} else {
 			//数据库语句执行失败
