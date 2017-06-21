@@ -41,6 +41,8 @@ Class Response
 			'message' => $message,
 			'data' => $data,
 		);
+		$time = time()-60; // or filemtime($fn), etc
+		header('Last-Modified: '.date("Y-m-d h:i:s",time()));
 		header("Content-type:text/json;chaset=utf-8");
 		return json_encode($result);
 	}

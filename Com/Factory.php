@@ -142,7 +142,18 @@ class Factory
 		$key = 'router_'.$type;
 		$router = Register::get($key);
 		if (!$router) {
-			$router = new Router($type,$dataform);
+			//$router = new Router($type,$dataform);
+			$router = new \App\Router\V1\Router($type,$dataform);
+			Register::set($key, $router);
+		}
+		return $router;
+	}
+	//
+	static function getConfigAutoReload($path){
+		$key = 'config_auto_reload'.$path;
+		$router = Register::get($key);
+		if (!$router) {
+			$router = ConfigAutoReload::getInstance($path);
 			Register::set($key, $router);
 		}
 		return $router;

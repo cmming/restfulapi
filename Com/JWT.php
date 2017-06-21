@@ -2,10 +2,10 @@
 
 namespace Com;
 
-use \DomainException;
-use \InvalidArgumentException;
-use \UnexpectedValueException;
-use \DateTime;
+use DomainException;
+use InvalidArgumentException;
+use UnexpectedValueException;
+use DateTime;
 
 use Com\Factory;
 
@@ -65,18 +65,26 @@ class JWT
 	public static function decode($jwt, $key, $allowed_algs = array())
 	{
 		if (empty($key)) {
-			throw new InvalidArgumentException('Key may not be empty');
+			//key 值不能为空
+			//throw new InvalidArgumentException('Key may not be empty');
+			throw Factory::getCoreException('CODE_EXPIRES_SIGN');
 		}
 		$tks = explode('.', $jwt);
 		if (count($tks) != 3) {
-			throw new UnexpectedValueException('Wrong number of segments');
+			//token 格式错误
+			//throw new UnexpectedValueException('Wrong number of segments');
+			throw Factory::getCoreException('CODE_EXPIRES_SIGN');
 		}
 		list($headb64, $bodyb64, $cryptob64) = $tks;
 		if (null === ($header = JWT::jsonDecode(JWT::urlsafeB64Decode($headb64)))) {
-			throw new UnexpectedValueException('Invalid header encoding');
+			//标头无效编码
+			//throw new UnexpectedValueException('Invalid header encoding');
+			throw Factory::getCoreException('CODE_EXPIRES_SIGN');
 		}
 		if (null === $payload = JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64))) {
-			throw new UnexpectedValueException('Invalid claims encoding');
+			//无效请求的编码
+			//throw new UnexpectedValueException('Invalid claims encoding');
+			throw Factory::getCoreException('CODE_EXPIRES_SIGN');
 		}
 		$sig = JWT::urlsafeB64Decode($cryptob64);
 

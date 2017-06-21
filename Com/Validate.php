@@ -6,59 +6,15 @@
  * Time: 14:42
  * help: http://blog.csdn.net/php_897721669/article/details/8965811
  */
-//$data = array(
-//		"username"=>'ningofaura@gmail.com',
-//		"qq"=>'593084029',
-//		"nickname"=>'张海宁',
-//		"id"=>'24',
-//);
-//$validate_role = array(
-//		'username'=>array(
-//				'required'=>true,
-//				'email'=>true,
-//		),
-//		'qq'=>array(
-//				'required'=>true,
-//				'qq'=>true,
-//		),
-//		'nickname'=>array(
-//				'required'=>true,
-//		),
-//		'id'=>array(
-//				'required'=>true,
-//				'number'=>true,
-//		),
-//);
-//
-//$validate_err_msg = array(
-//		'username'=>array(
-//				'required'=>"用户名不能为空",
-//				'email'=>"邮箱格式不正确",
-//		),
-//		'qq'=>array(
-//				'required'=>"qq不能为空",
-//				'qq'=>"qq格式不正确",
-//		),
-//		'nickname'=>array(
-//				'required'=>"昵称不能为空",
-//		),
-//		'id'=>array(
-//				'required'=>"id不能为空",
-//				'number'=>"不是数字",
-//		),
-//);
-//$Validate = new Validate();
-//$rt = $Validate->verify($data, $validate_role, $validate_err_msg);
-//if ($rt !== true){
-//	echo $rt;
-//	exit;
-//}
+
 //添加默认的错误消息 同时支持自定义错误信息
 namespace Com;
 
 
 class Validate
 {
+	private $no_data = '验证数据为空';
+	private $no_data_role = '验证规则缺失';
 	// 验证规则
 	private $role_name = array(
 		// 验证是否为空
@@ -115,41 +71,64 @@ class Validate
 
 	/**
 	 * [验证函数]
-	 * @param  [array] $data                [用户要验证的数据]
-	 * @param  [array] $validate_role       [验证规则]
-	 * @param  [array] $validate_err_msg    [错误信息提示]
-	 * @return [bool]                       [成功返回true, 失败返回错误信息]
+	 * @param $data       				[用户要验证的数据]
+	 * @param $validate_role			[验证规则]
+	 * @param array $validate_err_msg	[错误信息提示]
+	 * @return array					['result'=>bool,'message'=>错误信息,'data'=>修改后的数据]
+	 * @throws Core_Exception			抛出的错误
 	 */
+
 	public function verify($data, $validate_role, $validate_err_msg = array())
 	{
-		if (empty($data)) return false;
-		if (empty($validate_role)) return false;
-		foreach ($data as $key => $value) {
-			$key = strtolower($key);
-			foreach ($validate_role as $kk => $vv) {
-				$kk = strtolower($kk);
-				if ($key == $kk) {
-					foreach ($vv as $k => $v) {
-						$k = strtolower($k);
-						if (!in_array($k, $this->role_name)) return 'role name "' . $k . '" is not found!';
-						if ($v == true) {
-							if (!$this->$k($value)) {
-								if (!isset($validate_err_msg[$kk][$k])){
-									$resMsg = $this->err_msg_default[$k];
-								}else{
-									$resMsg = $validate_err_msg[$kk][$k];
-								}
-//									return 'var ' . $key . ' in ' . $k . ' of regular validation failure!';
-								//不满足要求可以输出 warning 日志
-								\Com\CoreLogger::getInstance()->writeLog(__METHOD__.":".__LINE__,$data[$key]."->".$resMsg,\Com\CoreLogger::LOG_LEVL_WARNING);
-								return $resMsg;
-							}
-						}
+		//返回值
+		$resArr = array();
+		//遍历每一个验证角色
+		foreach ($validate_role as $kk => $vv) {
+			//将所有待验证的字符转换为小写
+			$kk = strtolower($kk);
+			//如果待验证数据的关键字 等于 验证角色的关键字
+			//遍历该验证角色
+			foreach ($vv as $k => $v) {
+				//将所有的关键字进行 转换为小写 $key 表示要验证的函数名
+				$k = strtolower($k);
+				//判断验证所支持的关键字是否存在于已经定义的字段中 ;内部错误
+				if (!in_array($k, $this->role_name)) return 'role name "' . $k . '" is not found!';
+				//如果该验证种类的值为true  (后面支持，该字段可以设置默认值的种类)
+				//if ($v == true) {
+				$value = isset($data[$kk]) ? $data[$kk] : '';
+				//分别带入各个函数进行验证
+				if (!$this->$k($value)) {
+					if (!isset($validate_err_msg[$kk][$k])) {
+						$resMsg = $kk . $this->err_msg_default[$k];
+					} else {
+						$resMsg = $kk . $validate_err_msg[$kk][$k];
 					}
+					$resArr['result'] = false;
+					$resArr['message'] = $resMsg;
+//									return 'var ' . $key . ' in ' . $k . ' of regular validation failure!';
+					//不满足要求可以输出 warning 日志
+					\Com\CoreLogger::getInstance()->writeLog(__METHOD__ . ":" . __LINE__, $value . "->" . $resMsg, \Com\CoreLogger::LOG_LEVL_WARNING);
+					return $resArr;
+				} else {
+					$resArr['result'] = true;
+					$resArr['message'] = 'ok';
+				}
+				//为data 设置默认值
+				if ((!isset($data[$kk])||$data[$kk]=='')&&$v !== true) {
+					$data[$kk] = $this->set_data_default($v);
 				}
 			}
 		}
-		return true;
+		$resArr['data'] = $data;
+		return $resArr;
+	}
+	//为data 设置默认值
+	public function set_data_default($v){
+		if($v == 'number'){
+			return '0';
+		}else{
+			return $v;
+		}
 	}
 
 	// 获取规则数组
@@ -251,7 +230,8 @@ class Validate
 	// 验证数字
 	public function number($str)
 	{
-		if (preg_match("/^[0-9]+$/", $str)) return true;
+		//if (preg_match("/^[0-9]+$/", $str)) return true;
+		if (preg_match("/^(0|[1-9][0-9]*)?$/", $str)) return true;
 		else return false;
 	}
 

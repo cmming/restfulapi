@@ -25,6 +25,10 @@ class Jwt
 			return Factory::getController('Auth\Auth')->dealToken($token);
 		}
 	}
+	//为添加给路由的过滤器使用做准备
+	public function before(){
+		$this->checkToken();
+	}
 
 }
 ?>

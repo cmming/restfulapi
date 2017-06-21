@@ -57,9 +57,28 @@ class MsgModel
 		//调用数据库
 		$db = Factory::getClassDbApi();
 		$result = false;
-		if ($db->set_db_link('slave1')) {
-			$query_arr = array('tb_name' => 't_msg_list', 'cond_col' => array('id=' => $delete_id));
-			$result = $db->mysql_delete_query($query_arr, $db->get_link());
+		$check_arr = array('host'=>'slave1','tb_name' => 't_msg_list', 'cond_col' => array('id=' => $delete_id));
+		$is_exist = $db->check_one_exist($check_arr);
+		if($is_exist){
+			if ($db->set_db_link('slave1')) {
+				$query_arr = array('tb_name' => 't_msg_list', 'cond_col' => array('id=' => $delete_id));
+				$result = $db->mysql_delete_query($query_arr, $db->get_link());
+			}
+		}else{
+			throw Factory::getCoreException('CODE_DATA_NO_EXIST');
+		}
+		return $result;
+	}
+	//根据用户的id获取信息
+	public function getMsgById($id){
+		//调用数据库
+		$db = Factory::getClassDbApi();
+		$check_arr = array('host'=>'slave1','tb_name' => 't_msg_list', 'cond_col' => array('id=' => $id));
+		$is_exist = $db->check_one_exist($check_arr);
+		if($is_exist){
+			$result = $db->get_sdk_table_single('slave1', 't_msg_list', 'id', $id);
+		}else{
+			throw Factory::getCoreException('CODE_UNABLE_DATA');
 		}
 		return $result;
 	}

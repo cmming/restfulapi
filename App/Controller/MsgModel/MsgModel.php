@@ -18,12 +18,13 @@ class MsgModel extends BaseController
 		//数据 要求
 		$validate_role = array(
 			'cur_page' => array(
-				'number' => true,
+				'number' => 1,
 			)
 		);
 		$rt = Factory::getValidate()->verify($formdata, $validate_role);
 
-		if ($rt === true) {
+		if ($rt['result'] === true) {
+			$formdata = $rt['data'];
 			//搜索的参数
 			$con_arr = array();
 			//分页的初始化参数
@@ -38,7 +39,7 @@ class MsgModel extends BaseController
 			$msg = parent::getErrorMsg('CODE_DEAL_OK');
 		} else {
 			$code = parent::getErrorCode('CODE_DEAL_FAIL');
-			$msg = $rt;
+			$msg = $rt['message'];
 			$modelRes = array();
 		}
 		return Factory::getResponse()->show($code, $msg, $modelRes);
@@ -55,11 +56,15 @@ class MsgModel extends BaseController
 			'upd_flag' => array(
 				'required' => true,
 				'number' => true
+			),
+			'update_id' => array(
+				'number' => true
 			)
 		);
 		$rt = Factory::getValidate()->verify($formdata, $validate_role);
 
-		if ($rt === true) {
+		if ($rt['result'] === true) {
+			$formdata = $rt['data'];
 
 			//调用数据层
 			$model = Factory::getModel('MsgModelModel');
@@ -69,7 +74,7 @@ class MsgModel extends BaseController
 			$msg = parent::getErrorMsg('CODE_DEAL_OK');
 		} else {
 			$code = parent::getErrorCode('CODE_DEAL_FAIL');
-			$msg = $rt;
+			$msg = $rt['message'];
 			$modelRes = array();
 		}
 		return Factory::getResponse()->show($code, $msg, $modelRes);
@@ -86,7 +91,8 @@ class MsgModel extends BaseController
 		);
 		$Validate = Factory::getValidate();
 		$rt = $Validate->verify($formdata, $validate_role);
-		if ($rt === true) {
+		if ($rt['result'] === true) {
+			$formdata = $rt['data'];
 			//调用数据层
 			$model = Factory::getModel('MsgModelModel');
 			$modelRes = $model->deleteMsgModel($formdata['delete_id']);
@@ -95,7 +101,7 @@ class MsgModel extends BaseController
 			$msg = parent::getErrorMsg('CODE_DEAL_OK');
 		} else {
 			$code = parent::getErrorCode('CODE_DEAL_FAIL');
-			$msg = $rt;
+			$msg = $rt['message'];
 			$modelRes = array();
 		}
 		return Factory::getResponse()->show($code, $msg, $modelRes);

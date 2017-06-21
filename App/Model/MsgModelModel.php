@@ -40,6 +40,9 @@ class MsgModelModel
 					$update_arg = array('tb_name' => 't_msg_model_list', 'record_arr' => $data_arr, 'cond_col' => array('id=' => $id));
 					if ($db->mysql_update_query($update_arg, $db->get_link()))
 						$result = true;
+				}else{
+					//数据不存在
+					throw Factory::getCoreException('CODE_DATA_NO_EXIST');
 				}
 			} else {
 				unset($data_arr['upd_flag']);
@@ -56,9 +59,16 @@ class MsgModelModel
 		//调用数据库
 		$db = Factory::getClassDbApi();
 		$result = false;
-		if ($db->set_db_link('slave1')) {
-			$query_arr = array('tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $delete_id));
-			$result = $db->mysql_delete_query($query_arr, $db->get_link());
+		$check_arr = array('host'=>'slave1','tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $id));
+		$is_exist = $db->check_one_exist($check_arr);
+		if($is_exist){
+			if ($db->set_db_link('slave1')) {
+				$query_arr = array('tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $delete_id));
+				$result = $db->mysql_delete_query($query_arr, $db->get_link());
+			}
+		}else{
+			//数据不存在
+			throw Factory::getCoreException('CODE_DATA_NO_EXIST');
 		}
 		return $result;
 	}

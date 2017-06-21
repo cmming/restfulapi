@@ -8,8 +8,23 @@
 
 单一入口，自动加载
 
+验证类：
+       前提：不应该依赖待验证的数据，应该以验证角色为主
+       功能：验证接受参数的同时，支持设置默认值，
+
+路由类：实现逻辑和数据分离，复用逻辑部分；
+
+
+
+应用类：
+      作用：
+
+
 避免使用 全局函数（public static）
-最好放在工厂函数中统一创建
+最好放在工厂函数中统一创建，当时工厂类不应该这样用，当类过多的时候，并不友好；
+
+使用一个Di类，进行接受外部注册的类，
+同时使用一个application 类进行项目启动的格式化，各种类的初始化注册
 
 //错误异常处理
 throw new \Com\CoreException(\Com\CoreException::CODE_FAILED_CREATE_OBJ);
@@ -72,6 +87,8 @@ login
 http://192.168.0.88/laravel/dcenter/api/?type=login&dataform={"ad_uname":"cm","ad_pwd":"123456"}
 //添加
 http://192.168.0.88/laravel/dcenter/api/?type=addAdmin&dataform={"ad_uname":"cm","ad_pwd":"123456","ad_nick":"nicheng"}
+//跟新token
+http://192.168.0.88/laravel/dcenter/api/?type=updateToken&dataform={}
 //退出登录
 http://192.168.0.88/laravel/dcenter/api/?type=signUp&dataform={}
 

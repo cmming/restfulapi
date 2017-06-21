@@ -22,7 +22,9 @@ class Contact extends BaseController
 		);
 		$rt = Factory::getValidate()->verify($formdata, $validate_role);
 
-		if ($rt === true) {
+		if ($rt['result'] === true) {
+			$formdata = $rt['data'];
+
 			//搜索的参数
 			$check_arr = array('host' => 'slave1', 'tb_name' => 't_contacts_list', 'cond_col' => array('name=' => $formdata['name']));
 
@@ -37,7 +39,7 @@ class Contact extends BaseController
 			}
 		} else {
 			$code = parent::getErrorCode('CODE_DEAL_FAIL');
-			$msg = $rt;
+			$msg = $rt['message'];
 			$modelRes = array();
 		}
 		return Factory::getResponse()->show($code, $msg, $modelRes);
@@ -48,15 +50,16 @@ class Contact extends BaseController
 		//数据 要求
 		$validate_role = array(
 			'cur_page' => array(
-				'number' => true,
-				'required' => true,
+				'number' => 1,
 			),
 			'sid' => array(
 				'required' => true,
 			),
 		);
 		$rt = Factory::getValidate()->verify($formdata, $validate_role);
-		if ($rt === true) {
+		if ($rt['result'] === true) {
+			//
+			$formdata = $rt['data'];
 			//选择系统
 			$sid = $formdata['sid'];
 			//搜索的参数
@@ -79,7 +82,7 @@ class Contact extends BaseController
 			$msg = parent::getErrorMsg('CODE_DEAL_OK');
 		} else {
 			$code = parent::getErrorCode('CODE_DEAL_FAIL');
-			$msg = $rt;
+			$msg = $rt['message'];
 			$modelRes = array();
 		}
 		return Factory::getResponse()->show($code, $msg, $modelRes);
@@ -100,11 +103,15 @@ class Contact extends BaseController
 			'upd_flag' => array(
 				'required' => true,
 				'number' => true
+			),
+			'update_id' => array(
+				'number' => true
 			)
 		);
 		$rt = Factory::getValidate()->verify($formdata, $validate_role);
 
-		if ($rt === true) {
+		if ($rt['result'] === true) {
+			$formdata = $rt['data'];
 			//调用数据层
 			$modelRes = Factory::getModel('ContactModel')->updateContact($formdata);
 
@@ -112,7 +119,7 @@ class Contact extends BaseController
 			$msg = parent::getErrorMsg('CODE_DEAL_OK');
 		} else {
 			$code = parent::getErrorCode('CODE_DEAL_FAIL');
-			$msg = $rt;
+			$msg = $rt['message'];
 			$modelRes = array();
 		}
 		return Factory::getResponse()->show($code, $msg, $modelRes);
@@ -130,7 +137,8 @@ class Contact extends BaseController
 		);
 		$Validate = Factory::getValidate();
 		$rt = $Validate->verify($formdata, $validate_role);
-		if ($rt === true) {
+		if ($rt['result'] === true) {
+			$formdata = $rt['data'];
 			//调用数据层
 			$model = Factory::getModel('ContactModel');
 			$modelRes = $model->deleteContact($formdata['delete_id']);
@@ -139,7 +147,35 @@ class Contact extends BaseController
 			$msg = parent::getErrorMsg('CODE_DEAL_OK');
 		} else {
 			$code = parent::getErrorCode('CODE_DEAL_FAIL');
-			$msg = $rt;
+			$msg = $rt['message'];
+			$modelRes = array();
+		}
+		return Factory::getResponse()->show($code, $msg, $modelRes);
+	}
+
+	//获取一条联系人的数据
+	public function getContactById($formdata)
+	{
+		//数据 要求  数字而且不能为空
+		$validate_role = array(
+			'update_id' => array(
+				'required' => true,
+				'number' => true
+			),
+		);
+		$Validate = Factory::getValidate();
+		$rt = $Validate->verify($formdata, $validate_role);
+		if ($rt['result'] === true) {
+			$formdata = $rt['data'];
+			//调用数据层
+			$model = Factory::getModel('ContactModel');
+			$modelRes = $model->getContactById($formdata['update_id']);
+
+			$code = parent::getErrorCode('CODE_DEAL_OK');
+			$msg = parent::getErrorMsg('CODE_DEAL_OK');
+		} else {
+			$code = parent::getErrorCode('CODE_DEAL_FAIL');
+			$msg = $rt['message'];
 			$modelRes = array();
 		}
 		return Factory::getResponse()->show($code, $msg, $modelRes);

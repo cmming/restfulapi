@@ -17,6 +17,7 @@ use Com\Factory;
 
 //设置日志输出级别
 //\Com\CoreLogger->setLogLevel(\Com\CoreLogger::LOG_LEVL_NO);		//无日志
+//Factory::getCoreLogger(basename(__FILE__))->setLogLevel(\Com\CoreLogger::LOG_LEVL_DEBUG|\Com\CoreLogger::LOG_LEVL_ERROR|\Com\CoreLogger::LOG_LEVL_WARNING|\Com\CoreLogger::LOG_LEVL_DATA);
 \Com\CoreLogger::getInstance()->setLogFileName(basename(__FILE__));
 \Com\CoreLogger::getInstance()->setLogLevel(\Com\CoreLogger::LOG_LEVL_DEBUG|\Com\CoreLogger::LOG_LEVL_ERROR|\Com\CoreLogger::LOG_LEVL_WARNING|\Com\CoreLogger::LOG_LEVL_DATA);
 
@@ -29,8 +30,8 @@ try
 	$type = Request('type');
 	$dataform =Request('dataform',true);
 	//上线时用的接收参数方法
-	//$type = FrameworkRequest('type');
-	//$dataform =FrameworkRequest('dataform',true);
+//	$type = FrameworkRequest('type');
+//	$dataform =FrameworkRequest('dataform',true);
 	Factory::getCoreLogger($type)->writeLog(__METHOD__.":".__LINE__,"收到数据IP=[".getip_str()."] data=".json_encode($_REQUEST),\Com\CoreLogger::LOG_LEVL_DEBUG);
 
 	//根据路由的配置文件进行自动跳转

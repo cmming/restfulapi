@@ -14,7 +14,11 @@ class Loader
 {
 	static function autoload($class){
 		$file = BASEDIR.'/'.str_replace('\\','/',$class).'.php';
-		require $file;
+		if (file_exists($file)){
+			require $file;
+		}else{
+			throw new \Exception($file.'文件不存在');
+		}
 	}
 }
 ?>

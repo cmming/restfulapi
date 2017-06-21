@@ -25,7 +25,7 @@ $router->addHook('ok',new hook());
 
 //匿名函数的回调 ，实现起来麻烦；最简便的方式就是通过装饰漆的方式向，一个类的方法中 添加函数
 
-$router->addRouter('get','\sd\sd','sdds',function(){
+$router->addRouter('get','/sd/sd','sdds',function(){
 	echo 'callback1';
 });
 
