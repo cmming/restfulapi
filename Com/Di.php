@@ -5,7 +5,7 @@
  * Date: 2017/6/21
  * Time: 14:37
  *准备一个盒子(容器)，事先将项目中可能用到的类扔进去，在项目中直接从容器中拿，也就是避免了直接在项目中到处new，
- * 造成大量耦合。取而代之的是在项目类里面增设 setDi()和getDi()方法，通过Di同一管理类。取代之前的工厂类
+ * 造成大量耦合。取而代之的是在项目类里面增设 setDi()和getDi()方法，通过Di同一管理类。合并之前的工厂类和注册器类
  *
  * 支持的注册方式 set
  * 		类型：共享模式和非共享共享模式
@@ -24,11 +24,11 @@ class Di implements \ArrayAccess{
 	/**
 	 * @var array 服务列表
 	 */
-	private $_bindings = array();
+	public static $_bindings = array();
 	/**
 	 * @var array 已经实例化的服务 单例对象数组
 	 */
-	private $_instances = array();
+	public static $_instances = array();
 
 	/**
 	 * 获取服务

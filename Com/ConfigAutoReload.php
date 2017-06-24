@@ -27,10 +27,10 @@ class ConfigAutoReload implements \ArrayAccess
 
 	public static function getInstance($base_dir = '')
 	{
-		if (empty(self::$instance)) {
-			self::$instance = new self($base_dir);
+		if (empty(self::$instance[$base_dir])) {
+			self::$instance[$base_dir] = new self($base_dir);
 		}
-		return self::$instance;
+		return self::$instance[$base_dir];
 	}
 
 	//获取一个偏移位置的值

@@ -8,11 +8,13 @@
 
 namespace Com;
 
+use Com\Register;
+
 
 //创建 工厂类 用来创建各种类
 class Factory
 {
-	//日志类 对于单例类，没有必要封装，或者将其转换为非单例模式
+	//日志类 对于单例类
 	static function getCoreLogger($filename = '')
 	{
 		$filename = preg_replace("/[^A-Za-z]/", "-", $filename);
@@ -28,7 +30,7 @@ class Factory
 		return $core_logger;
 	}
 
-	//错误信息类 对于单例类，没有必要封装，或者将其转换为非单例模式(修改)
+	//错误信息类 (修改)
 	static function getCoreException($code = '')
 	{
 		$key = 'com_core_exception';
@@ -61,9 +63,8 @@ class Factory
 		$key = 'com_class_db_api_' . $db_name;
 		$class_db_api = Register::get($key);
 		if (!$class_db_api) {
-//			var_dump($db_name,1);
 			$class_db_api = new \Com\ClassDbApi($db_name);
-			Register::set($key, $class_db_api);
+			Register::setShared($key, $class_db_api);
 		}
 		return $class_db_api;
 	}
@@ -93,18 +94,6 @@ class Factory
 		return $response;
 	}
 
-	//获取model
-	static function getBaseModel()
-	{
-		$key = 'com_base_model';
-		$base_model = Register::get($key);
-		if (!$base_model) {
-			$base_model = new \App\Model\BaseModel();
-			Register::set($key, $base_model);
-		}
-		return $base_model;
-	}
-
 	//获取控制器 对象
 	static function getController($controllerClass)
 	{
@@ -127,13 +116,16 @@ class Factory
 		}
 		return $controller_auth;
 	}
-	static function getMiddelWare($mideleware_name){
+	static function getMiddelWare($mideleware_name,$params = ''){
 		$key = 'middelware'.$mideleware_name;
 		$mideleware = Register::get($key);
 		if (!$mideleware) {
 			$class = '\\App\\Middleware\\' . ucwords($mideleware_name);
-			$mideleware = new $class;
-			Register::set($key, $mideleware);
+			$mideleware = new $class($params);
+			Register::set($key,function($mideleware_name,$params){
+				$class = '\\App\\Middleware\\' . ucwords($mideleware_name);
+				new $class($params);
+			});
 		}
 		return $mideleware;
 	}

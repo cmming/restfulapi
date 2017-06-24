@@ -25,11 +25,14 @@ class Router
 			$isJwt = $array[$type]['isJwt'];
 			$path = $array[$type]['path'];
 			$ctr = $array[$type]['ctr'];
+
 			//需要登录验证
 			if($isJwt){
 				//为路由对象添加过滤器
 				$router->addHook('isLogin',Factory::getMiddelWare('Jwt\Jwt'));
 			}
+			//权限验证
+			$router->addHook('checkUserRights',Factory::getMiddelWare('UserRights\UserRights',$type));
 			// 创建路由
 			$router->addRouter($path, $ctr, $dataform);
 		}else{

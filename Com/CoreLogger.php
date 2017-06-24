@@ -50,7 +50,7 @@ class CoreLogger
 			{
 				//抛出异常，告知用户同时写入日志
 				CoreLogger::getInstance()->writeLog(get_called_class()."::".__METHOD__.":".__LINE__,"创建对象失败",CoreLogger::LOG_LEVL_ERROR);
-				throw new Core_Exception(Core_Exception::CODE_FAILED_CREATE_OBJ);
+				throw Factory::getCoreException('CODE_FAILED_CREATE_OBJ');
 			}
         }
         return self::$_instance;

@@ -5,7 +5,7 @@
 
 //设置市区为北京时间
 date_default_timezone_set('PRC');
-
+session_start();
 define('BASEDIR',__DIR__);
 include BASEDIR.'/Com/Loader.php';
 include BASEDIR.'/Com/func.php';

@@ -59,7 +59,7 @@ class MsgModelModel
 		//调用数据库
 		$db = Factory::getClassDbApi();
 		$result = false;
-		$check_arr = array('host'=>'slave1','tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $id));
+		$check_arr = array('host'=>'slave1','tb_name' => 't_msg_model_list', 'cond_col' => array('id=' => $delete_id));
 		$is_exist = $db->check_one_exist($check_arr);
 		if($is_exist){
 			if ($db->set_db_link('slave1')) {

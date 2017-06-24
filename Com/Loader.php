@@ -9,7 +9,6 @@
 namespace Com;
 
 
-
 class Loader
 {
 	static function autoload($class){
@@ -19,6 +18,10 @@ class Loader
 		}else{
 			throw new \Exception($file.'文件不存在');
 		}
+	}
+	//
+	public function load(){
+		spl_autoload_register('\\Com\\Loader::autoload');
 	}
 }
 ?>
